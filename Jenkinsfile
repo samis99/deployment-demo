@@ -40,7 +40,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'GITHUB',
                             usernameVariable: 'username', passwordVariable: 'password')]) {
 
-                        git url: gitOpsRepo
+                        git url: gitOpsRepo, branch: 'main'
 
                         sh "git pull https://${username}:${password}@github.com/${username}/argocd-deployments.git"
                         sh "sed -i s+fra.ocir.io/frvabyu0plzy/deployment-demo.*+fra.ocir.io/frvabyu0plzy/deployment-demo:${BUILD_NUMBER}+g development/deployment.yaml"
