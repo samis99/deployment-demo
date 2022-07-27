@@ -7,17 +7,8 @@ pipeline {
     }
 
     agent any
-    tools {
-        maven 'maven-3.8.6'
-    }
 
     stages {
-
-        stage('Building project') {
-            steps {
-                sh 'mvn clean install'
-            }
-        }
 
         stage('Building image') {
             steps{
