@@ -37,7 +37,7 @@ pipeline {
         stage('Trigger Argo CD Deployment') {
             steps{
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'githubCredential',
+                    withCredentials([usernamePassword(credentialsId: 'GITHUB',
                             usernameVariable: 'username', passwordVariable: 'password')]) {
 
                         git url: gitOpsRepo
