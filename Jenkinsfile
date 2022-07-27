@@ -38,8 +38,7 @@ pipeline {
                 script {
                     // The below will clone the repo and will be checked out to master branch by default.
                     git url: gitOpsRepo
-                    sh "cat dev/registration-service.yaml"
-                    sh "sed -i s+fra.ocir.io/frvabyu0plzy/cis-registration-service.*+fra.ocir.io/frvabyu0plzy/cis-registration-service:${BUILD_NUMBER}+g dev/registration-service.yaml"
+                    sh "sed -i s+fra.ocir.io/frvabyu0plzy/deployment-demo.*+fra.ocir.io/frvabyu0plzy/deployment-demo:${BUILD_NUMBER}+g development/deployment.yaml"
                     sh "git add ."
                     sh "git commit -m 'Triggered by Jenkins Job with build number: ${BUILD_NUMBER}'"
                     sh "git push"
