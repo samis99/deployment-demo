@@ -4,6 +4,7 @@ pipeline {
         githubCredential = 'GITHUB'
         gitOpsRepo = 'https://github.com/samis99/argocd-deployments.git'
         dockerImage = ''
+
     }
 
     agent any
