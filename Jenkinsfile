@@ -39,11 +39,11 @@ pipeline {
                 script {
                         git url: gitOpsRepo, branch: 'main'
 
-                        sh "git pull https://github.com/argocd-deployments.git"
+                        sh "git pull https://github.com/samis99/argocd-deployments.git"
                         sh "sed -i s+fra.ocir.io/frvabyu0plzy/deployment-demo.*+fra.ocir.io/frvabyu0plzy/deployment-demo:${BUILD_NUMBER}+g development/deployment.yaml"
                         sh "git add ."
                         sh "git commit -m 'Triggered by Jenkins Job with build number: ${BUILD_NUMBER}'"
-                        sh "git push https://github.com/argocd-deployments.git"
+                        sh "git push https://github.com/samis99/argocd-deployments.git"
 
                 }
             }
