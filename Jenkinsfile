@@ -1,7 +1,6 @@
 pipeline {
     environment {
         registryRepo = "fra.ocir.io/frvabyu0plzy/deployment-demo"
-        githubCredential = 'GITHUB'
         registryCredential = 'OCIR'
         gitOpsRepo = 'https://github.com/samis99/argocd-deployments.git'
         dockerImage = ''
@@ -38,7 +37,7 @@ pipeline {
             steps{
                 script {
                     // The below will clone the repo and will be checked out to master branch by default.
-                    git credentialsId: githubCredential, url: gitOpsRepo
+                    git url: gitOpsRepo
                     sh "cat dev/registration-service.yaml"
                     sh "sed -i s+fra.ocir.io/frvabyu0plzy/cis-registration-service.*+fra.ocir.io/frvabyu0plzy/cis-registration-service:${BUILD_NUMBER}+g dev/registration-service.yaml"
                     sh "git add ."
