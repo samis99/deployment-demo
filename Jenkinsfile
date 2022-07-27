@@ -2,6 +2,7 @@ pipeline {
     environment {
         registryRepo = "fra.ocir.io/frvabyu0plzy/deployment-demo"
         registryCredential = 'OCIR'
+        githubCredential = 'GITHUB'
         gitOpsRepo = 'https://github.com/samis99/argocd-deployments.git'
         dockerImage = ''
     }
@@ -36,12 +37,17 @@ pipeline {
         stage('Trigger Argo CD Deployment') {
             steps{
                 script {
-                    // The below will clone the repo and will be checked out to master branch by default.
-                    git url: gitOpsRepo
-                    sh "sed -i s+fra.ocir.io/frvabyu0plzy/deployment-demo.*+fra.ocir.io/frvabyu0plzy/deployment-demo:${BUILD_NUMBER}+g development/deployment.yaml"
-                    sh "git add ."
-                    sh "git commit -m 'Triggered by Jenkins Job with build number: ${BUILD_NUMBER}'"
-                    sh "git push"
+                    withCredentials([usernamePassword(credentialsId: 'githubCredential',
+                            usernameVariable: 'username', passwordVariable: 'password')]) {
+
+                        git url: gitOpsRepo
+
+                        sh "git pull https://${username}:${password}@github.com/${username}/argocd-deployments.git"
+                        sh "sed -i s+fra.ocir.io/frvabyu0plzy/deployment-demo.*+fra.ocir.io/frvabyu0plzy/deployment-demo:${BUILD_NUMBER}+g development/deployment.yaml"
+                        sh "git add ."
+                        sh "git commit -m 'Triggered by Jenkins Job with build number: ${BUILD_NUMBER}'"
+                        sh "git push https://${username}:${password}@github.com/${username}/argocd-deployments.git"
+                    }
                 }
             }
         }
