@@ -2,9 +2,9 @@ pipeline {
     environment {
         registryRepo = "fra.ocir.io/frvabyu0plzy/deployment-demo"
         githubCredential = 'GITHUB'
+        registryCredential = 'OCIR'
         gitOpsRepo = 'https://github.com/samis99/argocd-deployments.git'
         dockerImage = ''
-
     }
 
     agent any
@@ -22,7 +22,7 @@ pipeline {
         stage('Pushing to OCIR') {
             steps {
                 script {
-                    docker.withRegistry( 'https://fra.ocir.io') {
+                    docker.withRegistry( 'https://fra.ocir.io', registryCredential ) {
                         dockerImage.push()
                     }
                 }
