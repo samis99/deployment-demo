@@ -37,8 +37,7 @@ pipeline {
         stage('Trigger Argo CD Deployment') {
             steps{
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'GITHUB',
-                            usernameVariable: 'username', passwordVariable: 'password')]) {
+
 
                         git url: gitOpsRepo, branch: 'main'
 
@@ -47,7 +46,7 @@ pipeline {
                         sh "git add ."
                         sh "git commit -m 'Triggered by Jenkins Job with build number: ${BUILD_NUMBER}'"
                         sh "git push https://${username}:${password}@github.com/${username}/argocd-deployments.git"
-                    }
+
                 }
             }
         }
