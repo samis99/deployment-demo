@@ -8,11 +8,16 @@ pipeline {
     }
 
     agent any
+    tools {
+        maven 'maven-3.8.6'
+    }
 
     stages {
 
         stage('Building image') {
             steps{
+                sh 'mvn clean install -DskipTests'
+
                 script {
                     dockerImage = docker.build(registryRepo + ":${BUILD_NUMBER}")
                 }
